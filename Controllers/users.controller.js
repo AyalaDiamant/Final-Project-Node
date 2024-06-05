@@ -1,5 +1,6 @@
 const userModel = require('../Models/user.model');
-let id = 0;
+const bcrypt = require('bcrypt');
+let id = 7;
 
 const getUsers = ('', async (req, res) => {
     try {
@@ -27,24 +28,26 @@ const getUsers = ('', async (req, res) => {
     }
   });
   
-  const addUser = ('', async (req, res) => {
-    const data = req.body;
-    console.log(data);
+  const addUser = async (req, res) => {
+    const { name, password, email } = req.body;
+    
     try {
-      const newUser = new userModel({
-        _id: id++,
-        name: data.name,
-        password: data.password,
-        email: data.email,
-      });
-      await newUser.save();
-      res.send('Data saved successfully!');
+        const hashedPassword = await bcrypt.hash(password, 10);
+        
+        const newUser = new userModel({
+            _id: id++,
+            name: name,
+            password: hashedPassword, 
+            email: email,
+        });
+
+        await newUser.save();
+        res.send('Data saved successfully!');
     } catch (err) {
-      console.error(err);
-      res.status(500).send('Error saving user');
+        console.error(err);
+        res.status(500).send('Error saving user');
     }
-  });
-  
+};
   const deleteUser = ('', async (req, res) => {
     try {
       const idParams = req.params.id;
