@@ -20,7 +20,6 @@ const login = async (req, res) => {
 
     try {
         const users = await getUsersFromDatabase();
-        // console.log(users);
         const hashedPassword = await bcrypt.hash(password, 10);
         console.log(users);
         for (const user of users) {
@@ -31,7 +30,6 @@ const login = async (req, res) => {
                     email: user.email,
                     password: user.password,
                 }, 'config.TOKEN_SECRET');
-
                 return res.header('auth-token', token).send({ 'token': token });
             }
         }

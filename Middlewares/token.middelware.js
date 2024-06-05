@@ -20,11 +20,10 @@ const verifyToken = async (req, res, next) => {
     const verified = jwt.verify(token, 'config.TOKEN_SECRET');
     req.user = verified;
     console.log(verified);
-    
+
     try {
         const users = await getUsersFromDatabase();
         console.log(users);
-        
         // בדיקה אם המשתמש נמצא במסד הנתונים
         const userExists = users.some(e => e._id == verified._id);
         if (userExists) {

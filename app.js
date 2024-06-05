@@ -11,10 +11,8 @@ const users = require('./Routers/user.router')
 const login = require('./Routers/login.router')
 const { verifyToken } = require('./Middlewares/token.middelware');
 
-
 app.use(login);
 app.use(verifyToken);
-
 app.use(meetings);
 app.use(services);
 app.use(users);
