@@ -2,9 +2,11 @@ const express = require('express');
 const meet = require('../Controllers/meeting.controller');
 const router = express.Router();
 const bodyParser = require('body-parser');
+const { isAdmin } = require('../Middlewares/token.middelware');
 
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: false }));
+
 
 /**
  * @swagger
@@ -29,7 +31,7 @@ router.use(bodyParser.urlencoded({ extended: false }));
  *               items:
  *                 type: object
  */
-router.get('/Meet', meet.getMeetings);
+router.get('/Meet',isAdmin, meet.getMeetings);
 
 /**
  * @swagger
@@ -77,7 +79,7 @@ router.get('/Meet/:id', meet.getMeetId);
  *       201:
  *         description: Created
  */
-router.post('/Meet', meet.addMeet);
+router.post('/Meet',isAdmin, meet.addMeet);
 
 /**
  * @swagger
@@ -109,7 +111,7 @@ router.post('/Meet', meet.addMeet);
  *       200:
  *         description: Updated
  */
-router.put('/Meet/:id', meet.updatedMeet);
+router.put('/Meet/:id',isAdmin, meet.updatedMeet);
 
 /**
  * @swagger
@@ -128,7 +130,7 @@ router.put('/Meet/:id', meet.updatedMeet);
  *       200:
  *         description: Deleted
  */
-router.delete('/Meet/:id', meet.deleteMeet);
+router.delete('/Meet/:id',isAdmin , meet.deleteMeet);
 
 module.exports = router;
 

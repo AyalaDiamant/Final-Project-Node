@@ -1,6 +1,6 @@
 const userModel = require('../Models/user.model');
 const bcrypt = require('bcrypt');
-let id = 0;
+let id = 98;
 
 const getUsers = ('', async (req, res) => {
   try {
@@ -28,9 +28,10 @@ const getUserId = ('', async (req, res) => {
   }
 });
 
-const addUser = async (req, res) => {
+const addUser = ('', async (req, res) => {
   const { name, password, email } = req.body;
   try {
+    console.log("hii2");
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = new userModel({
       _id: id++,
@@ -44,7 +45,7 @@ const addUser = async (req, res) => {
     console.error(err);
     res.status(500).send('Error saving user');
   }
-};
+});
 
 const deleteUser = ('', async (req, res) => {
   try {

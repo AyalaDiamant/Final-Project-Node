@@ -38,7 +38,7 @@ router.get('/Logout', login.logout);
  *           schema:
  *             type: object
  *             properties:
- *               username:
+ *               name:
  *                 type: string
  *               password:
  *                 type: string

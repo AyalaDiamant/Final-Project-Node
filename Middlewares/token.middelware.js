@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const userModel = require('../Models/user.model');
+const bcrypt = require('bcrypt');
 
 const getUsersFromDatabase = async () => {
     try {
@@ -10,6 +11,25 @@ const getUsersFromDatabase = async () => {
         throw err;
     }
 };
+
+const isAdmin = async (req, res, next) => {
+    const token = req.header('auth-token');
+    const user = jwt.verify(token, 'config.TOKEN_SECRET');
+    // req.user = user;
+    console.log(user);
+    try {
+        if (user.name === "ayala" && bcrypt.compare("123456", user.password)) {
+            next();
+        }
+        else{
+             return res.status(500).send('No access to a non-admin user');
+        }
+    } catch (err) {
+        console.error("Error fetching users from database:", err);
+        return res.status(500).send('No access to a non-admin user');
+    }
+}
+
 
 const verifyToken = async (req, res, next) => {
     const token = req.header('auth-token');
@@ -38,5 +58,6 @@ const verifyToken = async (req, res, next) => {
 };
 
 module.exports = {
-    verifyToken
+    verifyToken,
+    isAdmin
 };

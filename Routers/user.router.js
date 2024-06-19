@@ -2,6 +2,7 @@ const express = require('express');
 const user = require('../Controllers/users.controller');
 const router = express.Router();
 const bodyParser = require('body-parser');
+const { isAdmin } = require('../Middlewares/token.middelware');
 
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({extended: false}));
@@ -67,7 +68,7 @@ router.get('/User/:id', user.getUserId);
  *           schema:
  *             type: object
  *             properties:
- *               username:
+ *               name:
  *                 type: string
  *               password:
  *                 type: string
@@ -77,7 +78,7 @@ router.get('/User/:id', user.getUserId);
  *       201:
  *         description: Created
  */
-router.post('/User', user.addUser);
+router.post('/User',isAdmin, user.addUser);
 
 /**
  * @swagger
@@ -109,7 +110,7 @@ router.post('/User', user.addUser);
  *       200:
  *         description: Updated
  */
-router.put('/User/:id', user.updatedUser);
+router.put('/User/:id',isAdmin, user.updatedUser);
 
 /**
  * @swagger
@@ -128,6 +129,6 @@ router.put('/User/:id', user.updatedUser);
  *       200:
  *         description: Deleted
  */
-router.delete('/User/:id', user.deleteUser);
+router.delete('/User/:id',isAdmin, user.deleteUser);
 
 module.exports = router;
