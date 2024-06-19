@@ -11,6 +11,14 @@ const users = require('./Routers/user.router')
 const login = require('./Routers/login.router')
 const { verifyToken } = require('./Middlewares/token.middelware');
 
+const setupSwagger = require('./swagger'); // הוספת השורה הזו
+
+// Middleware
+app.use(express.json());
+
+// התקנת Swagger
+setupSwagger(app);
+
 app.use(login);
 app.use(verifyToken);
 app.use(meetings);
