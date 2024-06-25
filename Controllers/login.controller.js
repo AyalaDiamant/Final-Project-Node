@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const express = require('express');
 const router = express.Router();
 const userModel = require('../models/user.model');
+let id = 1000;
 
 const getUsersFromDatabase = async () => {
     try {
@@ -38,6 +39,36 @@ const login = async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 };
+
+
+const register = async (req, res) => {
+    const { name, email, password } = req.body;
+    try {
+        const existingUser = await userModel.findOne({ email });
+        if (existingUser) {
+            return res.status(400).send('User already exists.');
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const newUser = new userModel({
+            _id: id++,
+            name,
+            email,
+            password: hashedPassword,
+        });
+
+        await newUser.save();
+        const token = jwt.sign({
+            _id: newUser._id,
+            name: newUser.name,
+            email: newUser.email,
+        }, 'config.TOKEN_SECRET'); // שנה ל-secret שלך
+        res.header('auth-token', token).send({ token, name: newUser.name });
+    } catch (error) {
+        console.error('Error registering user:', error);
+        res.status(500).send('Internal Server Error');
+    }
+};
 // לא ברור למה רק ככה זה עובד בשביל הבדיקות
 // const logout = (req, res, error) => {
 //     if (error) {
@@ -55,6 +86,7 @@ const logout = (req, res) => {
 
 module.exports = {
     login,
+    register,
     logout,
 };
 

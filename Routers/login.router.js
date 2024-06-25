@@ -25,6 +25,7 @@ router.use(bodyParser.urlencoded({extended: false}));
  */
 router.get('/Logout', login.logout);
 
+
 /**
  * @swagger
  * /Login:
@@ -49,5 +50,7 @@ router.get('/Logout', login.logout);
  *         description: Unauthorized
  */
 router.post('/Login', login.login);
+
+router.post('/register', login.register);
 
 module.exports = router;
