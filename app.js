@@ -1,19 +1,21 @@
 const express = require('express');
 const app = express();
-require('dotenv').config();
+const cors = require('cors');
+const db = require('./DBconnect');
 const port = process.env.PORT;
 
-const db = require('./DBconnect');
+require('dotenv').config();
 
 const meetings = require('./Routers/meet.router')
 const services = require('./Routers/service.router')
 const users = require('./Routers/user.router')
 const login = require('./Routers/login.router')
-const { verifyToken } = require('./Middlewares/token.middelware');
+const { verifyToken } = require('./middlewares/token.middelware');
 
 const setupSwagger = require('./swagger');
 
 // Middleware
+app.use(cors());
 app.use(express.json());
 
 // התקנת Swagger
