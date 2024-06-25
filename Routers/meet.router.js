@@ -1,8 +1,8 @@
 const express = require('express');
-const meet = require('../Controllers/meeting.controller');
+const meet = require('../controllers/meeting.controller');
 const router = express.Router();
 const bodyParser = require('body-parser');
-const { isAdmin } = require('../Middlewares/token.middelware');
+const { isAdmin } = require('../middlewares/token.middelware');
 
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: false }));

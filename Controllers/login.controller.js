@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const express = require('express');
 const router = express.Router();
-const userModel = require('../Models/user.model');
+const userModel = require('../models/user.model');
 
 const getUsersFromDatabase = async () => {
     try {
@@ -17,7 +17,6 @@ const getUsersFromDatabase = async () => {
 const login = async (req, res) => {
     const userName = req.body.name;
     const password = req.body.password;
-
     try {
         const users = await getUsersFromDatabase();
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -39,7 +38,16 @@ const login = async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 };
-
+// לא ברור למה רק ככה זה עובד בשביל הבדיקות
+// const logout = (req, res, error) => {
+//     if (error) {
+//         res.status(500).send('Logout failed');
+//     }
+//     else {
+//         res.setHeader('auth-token', null);
+//         res.status(200).send('Logout successful');
+//     }
+// };
 const logout = (req, res) => {
     res.setHeader('auth-token', null);
     res.status(200).send('Logout successful');

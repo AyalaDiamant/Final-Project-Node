@@ -1,5 +1,5 @@
 const express = require('express');
-const login = require('../Controllers/login.controller');
+const login = require('../controllers/login.controller');
 const router = express.Router();
 const bodyParser = require('body-parser');
 
