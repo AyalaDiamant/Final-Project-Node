@@ -69,16 +69,7 @@ const register = async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 };
-// לא ברור למה רק ככה זה עובד בשביל הבדיקות
-// const logout = (req, res, error) => {
-//     if (error) {
-//         res.status(500).send('Logout failed');
-//     }
-//     else {
-//         res.setHeader('auth-token', null);
-//         res.status(200).send('Logout successful');
-//     }
-// };
+
 const logout = (req, res) => {
     res.setHeader('auth-token', null);
     res.status(200).send('Logout successful');

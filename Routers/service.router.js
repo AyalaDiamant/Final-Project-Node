@@ -3,9 +3,8 @@ const service = require('../controllers/services.controller');
 const router = express.Router();
 const bodyParser = require('body-parser');
 const { isAdmin } = require('../middlewares/token.middelware');
-
 router.use(bodyParser.json());
-router.use(bodyParser.urlencoded({extended: false}));
+router.use(bodyParser.urlencoded({ extended: false }));
 
 /**
  * @swagger
@@ -16,7 +15,7 @@ router.use(bodyParser.urlencoded({extended: false}));
 
 /**
  * @swagger
- * /Service:
+ * /services:
  *   get:
  *     summary: Get all services
  *     tags: [Services]
@@ -34,7 +33,7 @@ router.get('/Service', service.getServices);
 
 /**
  * @swagger
- * /Service/{id}:
+ * /services/{id}:
  *   get:
  *     summary: Get service by ID
  *     tags: [Services]
@@ -57,7 +56,7 @@ router.get('/Service/:id', service.getServiceId);
 
 /**
  * @swagger
- * /Service:
+ * /services:
  *   post:
  *     summary: Add a new service
  *     tags: [Services]
@@ -68,7 +67,7 @@ router.get('/Service/:id', service.getServiceId);
  *           schema:
  *             type: object
  *             properties:
- *               name:
+ *               price:
  *                 type: string
  *               description:
  *                 type: string
@@ -76,11 +75,11 @@ router.get('/Service/:id', service.getServiceId);
  *       201:
  *         description: Created
  */
-router.post('/Service',isAdmin, service.addService);
+router.post('/Service', isAdmin, service.addService);
 
 /**
  * @swagger
- * /Service/{id}:
+ * /services/{id}:
  *   put:
  *     summary: Update an existing service
  *     tags: [Services]
@@ -98,7 +97,7 @@ router.post('/Service',isAdmin, service.addService);
  *           schema:
  *             type: object
  *             properties:
- *               name:
+ *               price:
  *                 type: string
  *               description:
  *                 type: string
@@ -106,11 +105,11 @@ router.post('/Service',isAdmin, service.addService);
  *       200:
  *         description: Updated
  */
-router.put('/Service/:id',isAdmin, service.updatedService);
+router.put('/Service/:id', isAdmin, service.updatedService);
 
 /**
  * @swagger
- * /Service/{id}:
+ * /services/{id}:
  *   delete:
  *     summary: Delete a service
  *     tags: [Services]
@@ -125,6 +124,6 @@ router.put('/Service/:id',isAdmin, service.updatedService);
  *       200:
  *         description: Deleted
  */
-router.delete('/Service/:id',isAdmin, service.deleteService);
+router.delete('/Service/:id', isAdmin, service.deleteService);
 
 module.exports = router;

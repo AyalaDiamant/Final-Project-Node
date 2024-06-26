@@ -10,10 +10,24 @@ const options = {
       version: '1.0.0',
       description: 'This is a sample API documentation',
     },
+  components: {
+    securitySchemes: {
+      bearerAuth: {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+      },
+    },
   },
-  apis: ['Routers/*.js'], // ודאי שהנתיב נכון
+  security: [
+    {
+      bearerAuth: [],
+    },
+  ],
+},
+  apis: ['routers/*.js'], 
 };
-//Routers
+//routers
 const swaggerSpec = swaggerJSDoc(options);
 
 function setupSwagger(app) {
@@ -21,3 +35,5 @@ function setupSwagger(app) {
 }
 
 module.exports = setupSwagger;
+
+

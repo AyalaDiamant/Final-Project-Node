@@ -6,20 +6,20 @@ const port = process.env.PORT;
 
 require('dotenv').config();
 
-const meetings = require('./Routers/meet.router')
-const services = require('./Routers/service.router')
-const users = require('./Routers/user.router')
-const login = require('./Routers/login.router')
+const meetings = require('./routers/meet.router')
+const services = require('./routers/service.router')
+const users = require('./routers/user.router')
+const login = require('./routers/login.router')
 const { verifyToken } = require('./middlewares/token.middelware');
 
-const setupSwagger = require('./swagger');
+const swaggerSetup = require('./swagger');
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 
 // התקנת Swagger
-setupSwagger(app);
+swaggerSetup(app);
 
 app.use(login);
 app.use(verifyToken);

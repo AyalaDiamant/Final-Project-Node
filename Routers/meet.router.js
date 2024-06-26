@@ -3,10 +3,8 @@ const meet = require('../controllers/meeting.controller');
 const router = express.Router();
 const bodyParser = require('body-parser');
 const { isAdmin } = require('../middlewares/token.middelware');
-
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: false }));
-
 
 /**
  * @swagger
@@ -17,9 +15,11 @@ router.use(bodyParser.urlencoded({ extended: false }));
 
 /**
  * @swagger
- * /Meet:
+ * /meetings:
  *   get:
  *     summary: Get all meetings
+ *     security:
+ *       - bearerAuth: []
  *     tags: [Meetings]
  *     responses:
  *       200:
@@ -31,13 +31,15 @@ router.use(bodyParser.urlencoded({ extended: false }));
  *               items:
  *                 type: object
  */
-router.get('/Meet',isAdmin, meet.getMeetings);
+router.get('/Meet', isAdmin, meet.getMeetings);
 
 /**
  * @swagger
- * /Meet/{id}:
+ * /meetings/{id}:
  *   get:
  *     summary: Get meeting by ID
+ *     security:
+ *       - bearerAuth: []
  *     tags: [Meetings]
  *     parameters:
  *       - in: path
@@ -54,13 +56,15 @@ router.get('/Meet',isAdmin, meet.getMeetings);
  *             schema:
  *               type: object
  */
-router.get('/Meet/:id', meet.getMeetId);
+router.get('/Meet/:id', isAdmin, meet.getMeetId);
 
 /**
  * @swagger
- * /Meet:
+ * /meetings:
  *   post:
  *     summary: Add a new meeting
+ *     security:
+ *       - bearerAuth: []
  *     tags: [Meetings]
  *     requestBody:
  *       required: true
@@ -69,23 +73,25 @@ router.get('/Meet/:id', meet.getMeetId);
  *           schema:
  *             type: object
  *             properties:
- *               title:
+ *               time:
  *                 type: string
  *               date:
  *                 type: string
- *               location:
+ *               place:
  *                 type: string
  *     responses:
  *       201:
  *         description: Created
  */
-router.post('/Meet',isAdmin, meet.addMeet);
+router.post('/Meet', isAdmin, meet.addMeet);
 
 /**
  * @swagger
- * /Meet/{id}:
+ * /meetings/{id}:
  *   put:
  *     summary: Update an existing meeting
+ *     security:
+ *       - bearerAuth: []
  *     tags: [Meetings]
  *     parameters:
  *       - in: path
@@ -101,23 +107,25 @@ router.post('/Meet',isAdmin, meet.addMeet);
  *           schema:
  *             type: object
  *             properties:
- *               title:
+ *               time:
  *                 type: string
  *               date:
  *                 type: string
- *               location:
+ *               place:
  *                 type: string
  *     responses:
  *       200:
  *         description: Updated
  */
-router.put('/Meet/:id',isAdmin, meet.updatedMeet);
+router.put('/Meet/:id', isAdmin, meet.updatedMeet);
 
 /**
  * @swagger
- * /Meet/{id}:
+ * /meetings/{id}:
  *   delete:
  *     summary: Delete a meeting
+ *     security:
+ *       - bearerAuth: []
  *     tags: [Meetings]
  *     parameters:
  *       - in: path
@@ -130,7 +138,7 @@ router.put('/Meet/:id',isAdmin, meet.updatedMeet);
  *       200:
  *         description: Deleted
  */
-router.delete('/Meet/:id',isAdmin , meet.deleteMeet);
+router.delete('/Meet/:id', isAdmin, meet.deleteMeet);
 
 module.exports = router;
 

@@ -16,7 +16,7 @@ router.use(bodyParser.urlencoded({extended: false}));
 
 /**
  * @swagger
- * /User:
+ * /users:
  *   get:
  *     summary: Get all users
  *     tags: [Users]
@@ -34,7 +34,7 @@ router.get('/User', user.getUsers);
 
 /**
  * @swagger
- * /User/{id}:
+ * /users/{id}:
  *   get:
  *     summary: Get user by ID
  *     tags: [Users]
@@ -57,7 +57,7 @@ router.get('/User/:id', user.getUserId);
 
 /**
  * @swagger
- * /User:
+ * /users:
  *   post:
  *     summary: Add a new user
  *     tags: [Users]
@@ -78,11 +78,11 @@ router.get('/User/:id', user.getUserId);
  *       201:
  *         description: Created
  */
-router.post('/User',isAdmin, user.addUser);
+router.post('/User', isAdmin, user.addUser);
 
 /**
  * @swagger
- * /User/{id}:
+ * /users/{id}:
  *   put:
  *     summary: Update an existing user
  *     tags: [Users]
@@ -100,7 +100,7 @@ router.post('/User',isAdmin, user.addUser);
  *           schema:
  *             type: object
  *             properties:
- *               username:
+ *               name:
  *                 type: string
  *               password:
  *                 type: string
@@ -110,11 +110,11 @@ router.post('/User',isAdmin, user.addUser);
  *       200:
  *         description: Updated
  */
-router.put('/User/:id',isAdmin, user.updatedUser);
+router.put('/User/:id', isAdmin, user.updatedUser);
 
 /**
  * @swagger
- * /User/{id}:
+ * /users/{id}:
  *   delete:
  *     summary: Delete a user
  *     tags: [Users]
@@ -129,6 +129,6 @@ router.put('/User/:id',isAdmin, user.updatedUser);
  *       200:
  *         description: Deleted
  */
-router.delete('/User/:id',isAdmin, user.deleteUser);
+router.delete('/User/:id', isAdmin, user.deleteUser);
 
 module.exports = router;

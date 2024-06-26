@@ -1,4 +1,4 @@
-const meetModel = require('../Models/meet.model');
+const meetModel = require('../models/meet.model');
 let id = 0;
 
 const getMeetings = ('', async (req, res) => {
