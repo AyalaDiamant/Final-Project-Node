@@ -1,5 +1,5 @@
 const meetModel = require('../models/meet.model');
-let id = 20;
+let id = 30;
 
 const getMeetings = ('', async (req, res) => {
   try {
@@ -16,7 +16,7 @@ const getMeetbyUserId = ('', async (req, res) => {
   try {
     const userId = req.params.id;
     const meetings = await meetModel.find({ userId }); 
-    console.log(meetings);
+    // console.log(meetings);
     if (!meetings.length) {
       res.status(404).send('meet not found');
       return;
@@ -30,7 +30,7 @@ const getMeetbyUserId = ('', async (req, res) => {
 
 const addMeet = ('', async (req, res) => {
   const data = req.body;
-  console.log(req.user._id);
+  console.log(data);
   try {
     const newMeet = new meetModel({
       _id: id++,
@@ -38,15 +38,17 @@ const addMeet = ('', async (req, res) => {
       time: data.time,
       date: data.date,
       place: data.place,
+      common: data.common
     });
-
+    const selectedDateTime = new Date(`${data.date} ${data.time}`); // יצירת אובייקט תאריך ושעה
+    if(selectedDateTime < new Date())
+      return res.status(201).send('The time has passed, choose another time.');
     const existingMeet = await meetModel.findOne({ time: data.time, date: data.date });
     if (existingMeet) {
-      return res.status(400).send('Please choose another time.');
+      return res.status(201).send('Please choose another time.');
     }
-
     await newMeet.save();
-    res.send('Data saved successfully!');
+    res.status(200).send('Data saved successfully!');
   } catch (err) {
     console.error(err);
     res.status(500).send('Error saving meet');

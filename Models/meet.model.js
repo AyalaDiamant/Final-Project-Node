@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const userModel = require('./user.model');
 
 const meetSchema = new mongoose.Schema({
   _id: Number,
@@ -7,6 +6,7 @@ const meetSchema = new mongoose.Schema({
   time: String,
   date: String,
   place: String,
+  common: String
 }, {versionKey: false});
 
 const meetModel = mongoose.model('Meet', meetSchema);

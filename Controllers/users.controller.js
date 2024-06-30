@@ -5,7 +5,7 @@ let id = 1000;
 const getUsers = ('', async (req, res) => {
   try {
     const users = await userModel.find();
-    console.log(userModel);
+    // console.log(userModel);
     res.status(200).send(users);
   } catch (err) {
     console.error(err);

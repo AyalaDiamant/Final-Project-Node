@@ -56,7 +56,7 @@ router.get('/Meet', isAdmin, meet.getMeetings);
  *             schema:
  *               type: object
  */
-router.get('/Meet/:id', isAdmin, meet.getMeetbyUserId);
+router.get('/Meet/:id', meet.getMeetbyUserId);
 
 /**
  * @swagger
@@ -83,7 +83,7 @@ router.get('/Meet/:id', isAdmin, meet.getMeetbyUserId);
  *       201:
  *         description: Created
  */
-router.post('/Meet', isAdmin, meet.addMeet);
+router.post('/Meet', meet.addMeet);
 
 /**
  * @swagger
