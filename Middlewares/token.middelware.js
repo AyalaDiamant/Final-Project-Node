@@ -16,7 +16,7 @@ const isAdmin = async (req, res, next) => {
     const token = req.header('auth-token');
     const user = jwt.verify(token, 'config.TOKEN_SECRET');
     // req.user = user;
-    console.log(user);
+    // console.log(user);
     try {
         if (user.name === "ayala" && bcrypt.compare("123456", user.password)) {
             next();
@@ -43,7 +43,7 @@ const verifyToken = async (req, res, next) => {
 
     try {
         const users = await getUsersFromDatabase();
-        console.log(users);
+        // console.log(users);
         // בדיקה אם המשתמש נמצא במסד הנתונים
         const userExists = users.some(e => e._id == verified._id);
         if (userExists) {

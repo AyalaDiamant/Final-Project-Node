@@ -31,7 +31,6 @@ const getUserId = ('', async (req, res) => {
 const addUser = ('', async (req, res) => {
   const { name, password, email } = req.body;
   try {
-    console.log("hii2");
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = new userModel({
       _id: id++,

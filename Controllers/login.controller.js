@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const express = require('express');
 const router = express.Router();
 const userModel = require('../models/user.model');
-let id = 1000;
+let id = 64646452;
 
 const getUsersFromDatabase = async () => {
     try {
@@ -21,7 +21,7 @@ const login = async (req, res) => {
     try {
         const users = await getUsersFromDatabase();
         const hashedPassword = await bcrypt.hash(password, 10);
-        console.log(users);
+        // console.log(users);
         for (const user of users) {
             if (user.name === userName && bcrypt.compare(hashedPassword, user.password)) {
                 const token = jwt.sign({
@@ -42,6 +42,8 @@ const login = async (req, res) => {
 
 
 const register = async (req, res) => {
+    // console.log(req.body);
+
     const { name, email, password } = req.body;
     try {
         const existingUser = await userModel.findOne({ email });
@@ -56,13 +58,13 @@ const register = async (req, res) => {
             email,
             password: hashedPassword,
         });
-
+        console.log(newUser, "newUser");
         await newUser.save();
         const token = jwt.sign({
             _id: newUser._id,
             name: newUser.name,
             email: newUser.email,
-        }, 'config.TOKEN_SECRET'); // שנה ל-secret שלך
+        }, 'config.TOKEN_SECRET'); 
         res.header('auth-token', token).send({ token, name: newUser.name });
     } catch (error) {
         console.error('Error registering user:', error);

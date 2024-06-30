@@ -29,7 +29,7 @@ const getServiceId = ('', async (req, res) => {
 
 const addService = ('', async (req, res) => {
   const data = req.body;
-  console.log(data);
+  // console.log(data);
   try {
     const newService = new serviceModel({
       _id: id++,

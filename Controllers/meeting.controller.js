@@ -29,7 +29,7 @@ const getMeetId = ('', async (req, res) => {
 
 const addMeet = ('', async (req, res) => {
   const data = req.body;
-  console.log(data);
+  // console.log(data);
   try {
     const newMeet = new meetModel({
       _id: id++,
