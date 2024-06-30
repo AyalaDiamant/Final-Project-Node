@@ -30,7 +30,11 @@ const login = async (req, res) => {
                     email: user.email,
                     password: user.password,
                 }, 'config.TOKEN_SECRET');
-                return res.header('auth-token', token).send({ 'token': token });
+                const response = {
+                    token,
+                    userId: user._id 
+                  };
+                return res.header('auth-token', token).send( response);
             }
         }
         res.status(400).send('User does not exist.');

@@ -56,7 +56,7 @@ router.get('/Meet', isAdmin, meet.getMeetings);
  *             schema:
  *               type: object
  */
-router.get('/Meet/:id', isAdmin, meet.getMeetId);
+router.get('/Meet/:id', isAdmin, meet.getMeetbyUserId);
 
 /**
  * @swagger

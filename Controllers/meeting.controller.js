@@ -1,5 +1,5 @@
 const meetModel = require('../models/meet.model');
-let id = 0;
+let id = 20;
 
 const getMeetings = ('', async (req, res) => {
   try {
@@ -12,15 +12,16 @@ const getMeetings = ('', async (req, res) => {
   }
 });
 
-const getMeetId = ('', async (req, res) => {
+const getMeetbyUserId = ('', async (req, res) => {
   try {
-    const idParams = req.params.id;
-    const meet = await meetModel.findById(idParams);
-    if (!meet) {
+    const userId = req.params.id;
+    const meetings = await meetModel.find({ userId }); 
+    console.log(meetings);
+    if (!meetings.length) {
       res.status(404).send('meet not found');
       return;
     };
-    res.send(meet);
+    res.send(meetings);
   } catch (err) {
     console.error(err);
     res.status(500).send('Error retrieving meetings');
@@ -29,10 +30,11 @@ const getMeetId = ('', async (req, res) => {
 
 const addMeet = ('', async (req, res) => {
   const data = req.body;
-  // console.log(data);
+  console.log(req.user._id);
   try {
     const newMeet = new meetModel({
       _id: id++,
+      userId: req.user._id,
       time: data.time,
       date: data.date,
       place: data.place,
@@ -89,7 +91,7 @@ const updatedMeet = ('', async (req, res) => {
 
 module.exports = {
   getMeetings,
-  getMeetId,
+  getMeetbyUserId,
   addMeet,
   deleteMeet,
   updatedMeet
