@@ -1,6 +1,6 @@
 const userModel = require('../models/user.model');
 const bcrypt = require('bcrypt');
-let id = 1000;
+let id = 1;
 
 const getUsers = ('', async (req, res) => {
   try {
@@ -37,6 +37,7 @@ const addUser = ('', async (req, res) => {
       name: name,
       password: hashedPassword,
       email: email,
+      isAdmin: false,
     });
     await newUser.save();
     res.send('Data saved successfully!');
@@ -68,6 +69,7 @@ const updatedUser = ('', async (req, res) => {
     const updatedUser = await userModel.findByIdAndUpdate(
       idParams,
       { name, password, email },
+      false,
       { new: true },
     );
     if (!updatedUser) {

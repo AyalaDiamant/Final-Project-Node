@@ -2,7 +2,7 @@ const express = require('express');
 const service = require('../controllers/services.controller');
 const router = express.Router();
 const bodyParser = require('body-parser');
-const { isAdmin } = require('../middlewares/token.middelware');
+const { checkIsAdmin } = require('../middlewares/token.middelware');
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: false }));
 
@@ -75,7 +75,7 @@ router.get('/Service/:id', service.getServiceId);
  *       201:
  *         description: Created
  */
-router.post('/Service', isAdmin, service.addService);
+router.post('/Service', checkIsAdmin, service.addService);
 
 /**
  * @swagger
@@ -105,7 +105,7 @@ router.post('/Service', isAdmin, service.addService);
  *       200:
  *         description: Updated
  */
-router.put('/Service/:id', isAdmin, service.updatedService);
+router.put('/Service/:id', checkIsAdmin, service.updatedService);
 
 /**
  * @swagger
@@ -124,6 +124,5 @@ router.put('/Service/:id', isAdmin, service.updatedService);
  *       200:
  *         description: Deleted
  */
-router.delete('/Service/:id', isAdmin, service.deleteService);
-
+router.delete('/Service/:id', checkIsAdmin, service.deleteService);
 module.exports = router;

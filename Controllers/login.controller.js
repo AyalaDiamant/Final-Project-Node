@@ -21,7 +21,6 @@ const login = async (req, res) => {
     try {
         const users = await getUsersFromDatabase();
         const hashedPassword = await bcrypt.hash(password, 10);
-        // console.log(users);
         for (const user of users) {
             if (user.name === userName && bcrypt.compare(hashedPassword, user.password)) {
                 const token = jwt.sign({
@@ -29,10 +28,13 @@ const login = async (req, res) => {
                     name: user.name,
                     email: user.email,
                     password: user.password,
+                    isAdmin: user.isAdmin,
                 }, 'config.TOKEN_SECRET');
+                const isAdmin = user.isAdmin
                 const response = {
                     token,
-                    userId: user._id 
+                    userId: user._id,
+                    isAdmin,
                   };
                 return res.header('auth-token', token).send( response);
             }
@@ -61,6 +63,7 @@ const register = async (req, res) => {
             name,
             email,
             password: hashedPassword,
+            isAdmin: false,
         });
         console.log(newUser, "newUser");
         await newUser.save();
@@ -68,6 +71,7 @@ const register = async (req, res) => {
             _id: newUser._id,
             name: newUser.name,
             email: newUser.email,
+            isAdmin: false,
         }, 'config.TOKEN_SECRET'); 
         res.header('auth-token', token).send({ token, name: newUser.name });
     } catch (error) {

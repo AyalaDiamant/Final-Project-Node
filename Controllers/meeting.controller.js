@@ -1,5 +1,5 @@
 const meetModel = require('../models/meet.model');
-let id = 30;
+let id = 0;
 
 const getMeetings = ('', async (req, res) => {
   try {

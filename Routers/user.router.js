@@ -2,10 +2,10 @@ const express = require('express');
 const user = require('../controllers/users.controller');
 const router = express.Router();
 const bodyParser = require('body-parser');
-const { isAdmin } = require('../middlewares/token.middelware');
+const { checkIsAdmin } = require('../middlewares/token.middelware');
 
 router.use(bodyParser.json());
-router.use(bodyParser.urlencoded({extended: false}));
+router.use(bodyParser.urlencoded({ extended: false }));
 
 /**
  * @swagger
@@ -30,7 +30,7 @@ router.use(bodyParser.urlencoded({extended: false}));
  *               items:
  *                 type: object
  */
-router.get('/User', user.getUsers);
+router.get('/User', checkIsAdmin, user.getUsers);
 
 /**
  * @swagger
@@ -78,7 +78,7 @@ router.get('/User/:id', user.getUserId);
  *       201:
  *         description: Created
  */
-router.post('/User', isAdmin, user.addUser);
+router.post('/User', checkIsAdmin, user.addUser);
 
 /**
  * @swagger
@@ -110,7 +110,7 @@ router.post('/User', isAdmin, user.addUser);
  *       200:
  *         description: Updated
  */
-router.put('/User/:id', isAdmin, user.updatedUser);
+router.put('/User/:id', checkIsAdmin, user.updatedUser);
 
 /**
  * @swagger
@@ -129,6 +129,6 @@ router.put('/User/:id', isAdmin, user.updatedUser);
  *       200:
  *         description: Deleted
  */
-router.delete('/User/:id', isAdmin, user.deleteUser);
+router.delete('/User/:id', checkIsAdmin, user.deleteUser);
 
 module.exports = router;

@@ -63,6 +63,7 @@ const updatedService = ('', async (req, res) => {
   try {
     const idParams = req.params.id;
     const { description, price } = req.body;
+
     const updatedService = await serviceModel.findByIdAndUpdate(
       idParams,
       { description, price },
