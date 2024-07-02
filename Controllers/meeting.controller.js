@@ -16,7 +16,6 @@ const getMeetbyUserId = ('', async (req, res) => {
   try {
     const userId = req.params.id;
     const meetings = await meetModel.find({ userId }); 
-    // console.log(meetings);
     if (!meetings.length) {
       res.status(404).send('meet not found');
       return;
