@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const express = require('express');
 const router = express.Router();
 const userModel = require('../models/user.model');
-let id = 64646452;
+let id = 0;
 
 const getUsersFromDatabase = async () => {
     try {
@@ -35,8 +35,9 @@ const login = async (req, res) => {
                     token,
                     userId: user._id,
                     isAdmin,
-                  };
-                return res.header('auth-token', token).send( response);
+                    newUser :user,
+                };
+                return res.header('auth-token', token).send(response);
             }
         }
         res.status(400).send('User does not exist.');
@@ -72,8 +73,11 @@ const register = async (req, res) => {
             name: newUser.name,
             email: newUser.email,
             isAdmin: false,
-        }, 'config.TOKEN_SECRET'); 
-        res.header('auth-token', token).send({ token, name: newUser.name });
+        }, 'config.TOKEN_SECRET');
+        res.header('auth-token', token).send({
+            token, name: newUser.name,
+            newUser,
+        });
     } catch (error) {
         console.error('Error registering user:', error);
         res.status(500).send('Internal Server Error');
