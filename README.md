@@ -39,7 +39,7 @@ This Node.js system is a business management application that allows system admi
 ## Technologies in use
 - Node.js
 - MongoDB
-- Swager
+- Swagger
 - JWT for authentication
 - Mocked and live for testing units
 - ESLint for code padding
